@@ -63,7 +63,7 @@ class Training:
 
 class Running(Training):
     """Тренировка: бег."""
-    coeff_calorie_18: int = 18
+    CAL_SPEED_MULTIPLIER: int = 18
     MEAN_SPEED_SHIFT: float = 1.79
 
     def get_spent_calories(self) -> float:
@@ -71,7 +71,7 @@ class Running(Training):
         mean_speed_run: float = super().get_mean_speed()
         mean_duration_in_minut: float = (self.duration
                                          * self.MINUTES_IN_HOUR)
-        formula_spent_calories: float = ((self.coeff_calorie_18
+        formula_spent_calories: float = ((self.CAL_SPEED_MULTIPLIER
                                           * mean_speed_run
                                           + self.MEAN_SPEED_SHIFT)
                                          * self.weight / self.M_IN_KM
