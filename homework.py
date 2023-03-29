@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 
 class InfoMessage:
     """Информационное сообщение о тренировке."""
@@ -16,6 +14,7 @@ class InfoMessage:
         self.calories = calories
 
     def get_message(self) -> str:
+        """"Метод, который показывает расчеты тренировки."""
         message = (f'Тип тренировки: {self.training_type}; '
                    f'Длительность: {self.duration:.3f} ч.; '
                    f'Дистанция: {self.distance:.3f} км; '
@@ -83,9 +82,9 @@ class Running(Training):
 
 class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
-    coeff_calorie_29: float = 0.029
-    coeff_calorie_35: float = 0.035
-    coeff_calorie_278: float = 0.278
+    CAL_WALKING_MULTIPLIER_1: float = 0.029
+    CAL_WALKING_MULTIPLIER_2: float = 0.035
+    KM_H: float = 0.278
     HOURS_IN_MINUT = 60
     SM_IN_METERS = 100
 
@@ -102,14 +101,14 @@ class SportsWalking(Training):
         """Получаем количество затраченных калорий во время ходьбы."""
 
         mean_speed_spwal: float = (super().get_mean_speed()
-                                   * self.coeff_calorie_278)
+                                   * self.KM_H)
         mean_duration_in_minutes = self.duration * self.HOURS_IN_MINUT
         mean_height_in_meters = self.height / self.SM_IN_METERS
-        mean_spent_calories_spwal: float = ((self.coeff_calorie_35
+        mean_spent_calories_spwal: float = ((self.CAL_WALKING_MULTIPLIER_2
                                              * self.weight
                                              + (mean_speed_spwal**2
                                                 / mean_height_in_meters)
-                                             * self.coeff_calorie_29
+                                             * self.CAL_WALKING_MULTIPLIER_1
                                              * self.weight)
                                             * mean_duration_in_minutes)
         return mean_spent_calories_spwal
@@ -118,8 +117,8 @@ class SportsWalking(Training):
 class Swimming(Training):
     """Тренировка: плавание."""
     LEN_STEP: float = 1.38
-    coeff_calorie_1: float = 1.1
-    coeff_calorie_2: int = 2
+    CAL_SWIMMING_MULTIPLIER_1: float = 1.1
+    CAL_SWIMMING_MULTIPLIER_2: int = 2
 
     def __init__(self,
                  action: int,
@@ -145,8 +144,9 @@ class Swimming(Training):
 
         formula_mean_speed: float = self.get_mean_speed()
         formula_spent_calories: float = ((formula_mean_speed
-                                          + self.coeff_calorie_1)
-                                         * self.coeff_calorie_2 * self.weight
+                                          + self.CAL_SWIMMING_MULTIPLIER_1)
+                                         * self.CAL_SWIMMING_MULTIPLIER_2
+                                         * self.weight
                                          * self.duration)
         return formula_spent_calories
 
