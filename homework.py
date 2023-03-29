@@ -1,4 +1,3 @@
-
 class InfoMessage:
     """Информационное сообщение о тренировке."""
     def __init__(self,
@@ -82,11 +81,11 @@ class Running(Training):
 
 class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
-    CAL_WALKING_MULTIPLIER_1: float = 0.029
-    CAL_WALKING_MULTIPLIER_2: float = 0.035
+    HEIGHT_MULTIPLIER: float = 0.029
+    WEIGHT_MULTIPLIER: float = 0.035
     KM_H: float = 0.278
-    HOURS_IN_MINUT = 60
-    SM_IN_METERS = 100
+    HOURS_IN_MINUT: float = 60
+    SM_IN_METERS: float = 100
 
     def __init__(self,
                  action: int,
@@ -104,11 +103,11 @@ class SportsWalking(Training):
                                    * self.KM_H)
         mean_duration_in_minutes = self.duration * self.HOURS_IN_MINUT
         mean_height_in_meters = self.height / self.SM_IN_METERS
-        mean_spent_calories_spwal: float = ((self.CAL_WALKING_MULTIPLIER_2
+        mean_spent_calories_spwal: float = ((self.WEIGHT_MULTIPLIER
                                              * self.weight
                                              + (mean_speed_spwal**2
                                                 / mean_height_in_meters)
-                                             * self.CAL_WALKING_MULTIPLIER_1
+                                             * self.HEIGHT_MULTIPLIER
                                              * self.weight)
                                             * mean_duration_in_minutes)
         return mean_spent_calories_spwal
@@ -117,8 +116,8 @@ class SportsWalking(Training):
 class Swimming(Training):
     """Тренировка: плавание."""
     LEN_STEP: float = 1.38
-    CAL_SWIMMING_MULTIPLIER_1: float = 1.1
-    CAL_SWIMMING_MULTIPLIER_2: int = 2
+    SW_SPEED_MULTIPLIER: float = 1.1
+    SW_DISTANCE_MULTIPLIER: int = 2
 
     def __init__(self,
                  action: int,
@@ -134,18 +133,18 @@ class Swimming(Training):
     def get_mean_speed(self) -> float:
         """Получаем среднюю скорость движения во время плавания."""
 
-        formula_mean_speed_sw: float = (self.length_pool
-                                        * self.count_pool
-                                        / self.M_IN_KM / self.duration)
-        return formula_mean_speed_sw
+        mean_speed_sw: float = (self.length_pool
+                                * self.count_pool
+                                / self.M_IN_KM / self.duration)
+        return mean_speed_sw
 
     def get_spent_calories(self) -> float:
         """Получаем количество затраченных калорий во время плавания."""
 
         formula_mean_speed: float = self.get_mean_speed()
         formula_spent_calories: float = ((formula_mean_speed
-                                          + self.CAL_SWIMMING_MULTIPLIER_1)
-                                         * self.CAL_SWIMMING_MULTIPLIER_2
+                                          + self.SW_SPEED_MULTIPLIER)
+                                         * self.SW_DISTANCE_MULTIPLIER
                                          * self.weight
                                          * self.duration)
         return formula_spent_calories
