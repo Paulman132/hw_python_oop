@@ -23,7 +23,7 @@
 ## Запуск проекта
 Клонировать репозиторий и перейти в директорию проекта:
 ```
-git clone git@github.com:Paulman132/hw_python_oop.git
+git clone git@github.com:Paulman132/praktikum-fitness-tracker.git
 ```
 ```
 cd praktikum-fitness-tracker
